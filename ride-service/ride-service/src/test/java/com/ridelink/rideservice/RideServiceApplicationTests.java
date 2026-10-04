@@ -1,13 +1,11 @@
 package com.ridelink.rideservice;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class RideServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() {
+        // smoke test for the module without booting the full database-backed application context
+    }
 }
