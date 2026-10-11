@@ -1,5 +1,6 @@
 package com.ridelink.rideservice.dto;
 
+<<<<<<< HEAD
 import com.ridelink.rideservice.model.LocationPoint;
 import com.ridelink.rideservice.model.RideStatus;
 import com.ridelink.rideservice.model.VehicleType;
@@ -31,4 +32,21 @@ public class RideResponse {
     private String cancellationReason;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+=======
+import com.ridelink.rideservice.entity.RideStatus;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public record RideResponse(
+    Long id,
+    Long passengerId,
+    Long driverId,
+    String pickupAddress,
+    String destinationAddress,
+    RideStatus status,
+    BigDecimal estimatedFare,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+) {
+>>>>>>> edb500c28a5e04acdb764107e0260c57f1adacbb
 }
