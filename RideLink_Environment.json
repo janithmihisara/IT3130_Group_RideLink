@@ -1,0 +1,61 @@
+{
+	"id": "ridelink-environment-2026",
+	"name": "RideLink Local Environment",
+	"values": [
+		{
+			"key": "baseUrl_account",
+			"value": "http://localhost:8081",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl_driver",
+			"value": "http://localhost:8082",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl_ride",
+			"value": "http://localhost:8083",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl_payment",
+			"value": "http://localhost:8084",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "jwtToken",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "passengerId",
+			"value": "usr-pass-1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "driverId",
+			"value": "usr-driver-1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "rideId",
+			"value": "ride-1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "receiptNumber",
+			"value": "RCPT-123456",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment"
+}

@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "ridelink-postman-collection-2026",
+		"name": "RideLink Microservices API Collection",
+		"description": "Postman Collection for testing all 4 core microservices of the RideLink backend system (Account, Driver, Ride, Payment) with MongoDB integration.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Account Service (8081)",
+			"item": [
+				{
+					"name": "Register Passenger Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"John Passenger\",\n  \"email\": \"passenger@ridelink.com\",\n  \"password\": \"password123\",\n  \"phone\": \"0771234567\",\n  \"role\": \"PASSENGER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts/register",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts", "register"]
+						}
+					}
+				},
+				{
+					"name": "Register Driver Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"Sam Driver\",\n  \"email\": \"driver@ridelink.com\",\n  \"password\": \"password123\",\n  \"phone\": \"0779876543\",\n  \"role\": \"DRIVER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts/register",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login User & Obtain JWT",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"passenger@ridelink.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts/login",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts/profile",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts", "profile"]
+						}
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Driver & Vehicle Service (8082)",
+			"item": [
+				{
+					"name": "Register Driver Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"driverId\": \"{{driverId}}\",\n  \"name\": \"Sam Driver\",\n  \"phone\": \"0779876543\",\n  \"licenseNumber\": \"DL-99887766\",\n  \"vehicleDetails\": {\n    \"make\": \"Toyota\",\n    \"model\": \"Prius\",\n    \"year\": 2022,\n    \"licensePlate\": \"CAB-5544\",\n    \"color\": \"Silver\",\n    \"vehicleType\": \"SEDAN\",\n    \"capacity\": 4\n  },\n  \"serviceArea\": \"Colombo\",\n  \"currentLocation\": {\n    \"latitude\": 6.9271,\n    \"longitude\": 79.8612,\n    \"cityName\": \"Colombo\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_driver}}/api/drivers",
+							"host": ["{{baseUrl_driver}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Update Driver Availability (AVAILABLE)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"availabilityStatus\": \"AVAILABLE\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_driver}}/api/drivers/{{driverId}}/availability",
+							"host": ["{{baseUrl_driver}}"],
+							"path": ["api", "drivers", "{{driverId}}", "availability"]
+						}
+					}
+				},
+				{
+					"name": "Update Driver Location",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 6.9344,\n  \"longitude\": 79.8428,\n  \"cityName\": \"Colombo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_driver}}/api/drivers/{{driverId}}/location",
+							"host": ["{{baseUrl_driver}}"],
+							"path": ["api", "drivers", "{{driverId}}", "location"]
+						}
+					}
+				},
+				{
+					"name": "Get Available Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_driver}}/api/drivers/available?vehicleType=SEDAN&cityName=Colombo",
+							"host": ["{{baseUrl_driver}}"],
+							"path": ["api", "drivers", "available"],
+							"query": [
+								{ "key": "vehicleType", "value": "SEDAN" },
+								{ "key": "cityName", "value": "Colombo" }
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Fare & Payment Service (8084)",
+			"item": [
+				{
+					"name": "Calculate Fare Estimate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"distanceKm\": 8.5,\n  \"estimatedDurationMinutes\": 20.0,\n  \"vehicleType\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_payment}}/api/fares/estimate",
+							"host": ["{{baseUrl_payment}}"],
+							"path": ["api", "fares", "estimate"]
+						}
+					}
+				},
+				{
+					"name": "Process Simulated Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rideId\": \"{{rideId}}\",\n  \"passengerId\": \"{{passengerId}}\",\n  \"driverId\": \"{{driverId}}\",\n  \"amount\": 18.70,\n  \"paymentMethod\": \"CARD\",\n  \"simulateFailure\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_payment}}/api/payments/process",
+							"host": ["{{baseUrl_payment}}"],
+							"path": ["api", "payments", "process"]
+						}
+					}
+				},
+				{
+					"name": "Get Payment Receipt",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_payment}}/api/payments/receipt/{{receiptNumber}}",
+							"host": ["{{baseUrl_payment}}"],
+							"path": ["api", "payments", "receipt", "{{receiptNumber}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Ride Management Service (8083)",
+			"item": [
+				{
+					"name": "Create Ride Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"passengerId\": \"{{passengerId}}\",\n  \"pickupLocation\": {\n    \"address\": \"Colombo Fort Station\",\n    \"latitude\": 6.9344,\n    \"longitude\": 79.8428,\n    \"city\": \"Colombo\"\n  },\n  \"destinationLocation\": {\n    \"address\": \"Majestic City, Bambalapitiya\",\n    \"latitude\": 6.8887,\n    \"longitude\": 79.8585,\n    \"city\": \"Colombo\"\n  },\n  \"distanceKm\": 8.5,\n  \"estimatedDurationMinutes\": 20.0,\n  \"vehicleType\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/request",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "request"]
+						}
+					}
+				},
+				{
+					"name": "Assign Driver to Ride",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"driverId\": \"{{driverId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/assign",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "assign"]
+						}
+					}
+				},
+				{
+					"name": "Driver Accept Ride",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/accept",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "accept"]
+						}
+					}
+				},
+				{
+					"name": "Start Ride",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/start",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "start"]
+						}
+					}
+				},
+				{
+					"name": "Complete Ride & Process Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"paymentMethod\": \"CARD\",\n  \"simulatePaymentFailure\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/complete",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "complete"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Ride",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cancellationReason\": \"Passenger changed travel plans\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/cancel",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "cancel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Negative Workflow Scenarios",
+			"item": [
+				{
+					"name": "Negative: Duplicate Registration (409 Conflict)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"John Passenger\",\n  \"email\": \"passenger@ridelink.com\",\n  \"password\": \"password123\",\n  \"phone\": \"0771234567\",\n  \"role\": \"PASSENGER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_account}}/api/accounts/register",
+							"host": ["{{baseUrl_account}}"],
+							"path": ["api", "accounts", "register"]
+						}
+					}
+				},
+				{
+					"name": "Negative: Invalid Status Transition (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_ride}}/api/rides/{{rideId}}/accept",
+							"host": ["{{baseUrl_ride}}"],
+							"path": ["api", "rides", "{{rideId}}", "accept"]
+						}
+					}
+				},
+				{
+					"name": "Negative: Simulated Payment Failure (402 Payment Required)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rideId\": \"test-ride-fail\",\n  \"passengerId\": \"p-1\",\n  \"driverId\": \"d-1\",\n  \"amount\": 25.00,\n  \"paymentMethod\": \"CARD\",\n  \"simulateFailure\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl_payment}}/api/payments/process",
+							"host": ["{{baseUrl_payment}}"],
+							"path": ["api", "payments", "process"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

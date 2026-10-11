@@ -1,5 +1,23 @@
 package com.ridelink.rideservice.service;
 
+<<<<<<< HEAD
+import com.ridelink.rideservice.dto.*;
+import com.ridelink.rideservice.model.RideStatus;
+
+import java.util.List;
+
+public interface RideService {
+    RideResponse createRide(CreateRideRequest request);
+    RideResponse getRideById(String rideId);
+    RideResponse assignDriver(String rideId, AssignDriverRequest request);
+    RideResponse acceptRide(String rideId);
+    RideResponse startRide(String rideId);
+    RideResponse completeRide(String rideId, CompleteRideRequest request);
+    RideResponse cancelRide(String rideId, CancelRideRequest request);
+    List<RideResponse> getRidesByPassengerId(String passengerId);
+    List<RideResponse> getRidesByDriverId(String driverId);
+    List<RideResponse> getAllRides(RideStatus statusFilter);
+=======
 import com.ridelink.rideservice.dto.CreateRideRequest;
 import com.ridelink.rideservice.dto.DriverSummaryDto;
 import com.ridelink.rideservice.dto.FareEstimateRequest;
@@ -206,4 +224,5 @@ public class RideService {
             ride.getUpdatedAt()
         );
     }
+>>>>>>> edb500c28a5e04acdb764107e0260c57f1adacbb
 }
